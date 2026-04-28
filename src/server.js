@@ -182,8 +182,8 @@ app.post("/start-call", async (req, res) => {
   }
 });
 
-// ── POST /webhook/call-ended ───────────────────────────────────────────────────
-app.post("/webhook/call-ended", async (req, res) => {
+// ── POST /webhook/vapi ───────────────────────────────────────────────────────────
+app.post("/webhook/vapi", async (req, res) => {
   try {
     const { message } = req.body;
 
@@ -194,7 +194,7 @@ app.post("/webhook/call-ended", async (req, res) => {
     const transcript = message.transcript;
 
     if (!transcript) {
-      console.warn("[/webhook/call-ended] No transcript in payload.");
+      console.warn("[/webhook/vapi] No transcript in payload.");
       return res.json({ success: true });
     }
 
@@ -230,13 +230,13 @@ Return ONLY the JSON object. No markdown. No backticks.`;
 
     latestBrief = JSON.parse(cleaned);
     console.log(
-      "[/webhook/call-ended] Brief generated for call:",
+      "[/webhook/vapi] Brief generated for call:",
       message.call?.id,
     );
 
     return res.json({ success: true });
   } catch (err) {
-    console.error("[/webhook/call-ended error]", err);
+    console.error("[/webhook/vapi error]", err);
     return res.status(500).json({ success: false, error: err.message });
   }
 });
